@@ -3,8 +3,7 @@
 
 BEFORE YOU START!
 
-download dot.mp3 and dash.mp3 and place in a folder.
-in app.config, path "dotSound" and "dashSound" to the coresponding mp3 files.
+in app.config, path "dotSound" and "dashSound" to the coresponding mp3 files. (dot.mp3 & dash.mp3 located in the projects folder)
 also path the "logFile" for the logs.
 
 ##########
