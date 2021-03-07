@@ -15,6 +15,7 @@ namespace MorseCodeServer
 
         public static void Main(string[] args)
         {
+
             var logger = NLogBuilder.ConfigureNLog("nlog.config").GetCurrentClassLogger();
             try
             {
@@ -43,6 +44,8 @@ namespace MorseCodeServer
                         logging.SetMinimumLevel(LogLevel.Information);
                     })
             .UseNLog();
+
+
                 });
     }
 }

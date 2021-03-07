@@ -1,15 +1,22 @@
 ﻿@{
     ViewData["Title"] = "Home Page";
 }
-@model UserInputModel 
+@model UserInputModeldyn
 
 <div class="text-center">
 
+    @if (Model != null && !String.IsNullOrEmpty(Model.morse))
+    {
+        <audio onended="ended" controls="controls" id="audio">
+            Your browser does not support the &lt;audio&gt; tag.
+            <source id="source" src="" type="audio/wav" />
+        </audio>
 
-    <i id="input2">@ViewBag.Input</i>
-    <i id="freq">@ViewBag.Frequency</i>
+        <i hidden id="morse">@Model.morse</i>
+        <i hidden id="textualMorse">@Model.message</i>
 
-    <input id="input" type="button" value="play" />
+        <div id="error"></div>
+    }
 
 
 </div>

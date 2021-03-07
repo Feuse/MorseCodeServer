@@ -1,9 +1,12 @@
-﻿using System.Text;
+﻿
+
+using System;
 
 namespace MorseCodeServer.Services
 {
     public interface IMorseDecoder
     {
-        public StringBuilder Decode(string input);
+        public string Decode(string input);
+        public byte[] MorseBuilder(string msg);
     }
 }

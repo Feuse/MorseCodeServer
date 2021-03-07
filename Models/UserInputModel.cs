@@ -5,9 +5,10 @@ using System.Threading.Tasks;
 
 namespace MorseCodeServer.Models
 {
-    public class UserInputModel 
+    public static class UserInputModel
     {
-        public string Input { get; set; }
-        public int Frequency { get; set; } = 600;
+        public static string Input { get; set; }
+        public static int Frequency { get; set; } = 600;
+        
     }
 }

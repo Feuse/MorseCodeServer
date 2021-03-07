@@ -5,6 +5,6 @@ namespace MorseCodeServer.Services
 {
     public interface IRequestHandler
     {
-        public Task<StringBuilder> Handle(string msg);
+        public Task<string> Handle(string msg);
     }
 }
