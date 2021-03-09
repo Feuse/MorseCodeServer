@@ -36,7 +36,7 @@ window.onload = (event) => {
             url: "getSound",
             dataType: "JSON",
             data: { "msg": morse },
-            //timeout: 10000, // <==============================================================TIMEOUT 
+            //timeout: 10000, // <==============================================================TIMEOUT TEST
             success: function (src) {
                 var ret = _base64ToArrayBuffer(src);
                 var array = [].slice.call(ret)

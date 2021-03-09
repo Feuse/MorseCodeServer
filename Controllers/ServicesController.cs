@@ -16,23 +16,17 @@ namespace MorseCodeServer.Controllers
 {
     public class ServicesController : Controller
     {
-        static Queue<Thread> th;
         private UserInputModeldyn _model;
         private IMorseDecoder _decoder;
        
         private NLog.Logger _logger;
         private FrequencyChanger _freq;
-        private IMemoryCache _cache;
         public ServicesController(IMorseDecoder decoder, ILogger<HomeController> logger, IMemoryCache cache)
-        {
-            th = new Queue<Thread>();
-            _cache = cache;
+        { 
             _freq = new FrequencyChanger(cache);
             _model = new UserInputModeldyn();
             _model.Frequency = UserInputModel.Frequency;
-            //_model.Input = UserInputModel.Input;
-            _decoder = decoder;
-      
+            _decoder = decoder;     
             _logger = NLog.LogManager.GetLogger("Morse");
         }
 
@@ -53,18 +47,18 @@ namespace MorseCodeServer.Controllers
         static byte[] audio;
 
         [Route("getSound")]
-        //[HttpPost]
-        public byte[] GetSound(string msg)
+        [HttpPost]
+        public async Task<byte[]> GetSound(string msg)
         {
             audio = _decoder.MorseBuilder(msg);
-       
-            //await Task.Delay(10000);
+    
+            //await Task.Delay(10000); <=================== timout test.
 
             return audio;
         }
 
         [Route("morse")]
-       // [HttpPost]
+        //[HttpPost]
         public ActionResult Morse(string msg)
         {
             _model.message = msg;
@@ -78,9 +72,7 @@ namespace MorseCodeServer.Controllers
         public void LogMessage(string morse, string text)
         {
             _logger.Log(NLog.LogLevel.Info, "text: " + text + " morse: " + morse);
-            //get last log and check size if not max.
-            //if max create new file.
-            //Nlog has that functionallity built in.
+
 
         }
         [Route("log")]
