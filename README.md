@@ -4,7 +4,8 @@
 BEFORE YOU START!
 
 in app.config, path "dotSound" and "dashSound" to the coresponding mp3 files. (dot.mp3 & dash.mp3 located in the projects folder)
-also path the "logFile" for the logs.
+in nlog.config, path target with name "morse" to desired logging folder.
+in app.config, path "logFile" to logging file (read from).
 
 ##########
 
