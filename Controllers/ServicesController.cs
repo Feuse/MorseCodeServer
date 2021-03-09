@@ -9,29 +9,30 @@ using System.Collections.Generic;
 using System.Configuration;
 using System.Diagnostics;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace MorseCodeServer.Controllers
 {
     public class ServicesController : Controller
     {
-     
+        static Queue<Thread> th;
         private UserInputModeldyn _model;
         private IMorseDecoder _decoder;
-        private IRequestHandler _handler;
+       
         private NLog.Logger _logger;
         private FrequencyChanger _freq;
         private IMemoryCache _cache;
-        public ServicesController(IRequestHandler handler, IMorseDecoder decoder, ILogger<HomeController> logger,IMemoryCache cache)
+        public ServicesController(IMorseDecoder decoder, ILogger<HomeController> logger, IMemoryCache cache)
         {
-
+            th = new Queue<Thread>();
             _cache = cache;
             _freq = new FrequencyChanger(cache);
             _model = new UserInputModeldyn();
             _model.Frequency = UserInputModel.Frequency;
             //_model.Input = UserInputModel.Input;
             _decoder = decoder;
-            _handler = handler;
+      
             _logger = NLog.LogManager.GetLogger("Morse");
         }
 
@@ -53,20 +54,21 @@ namespace MorseCodeServer.Controllers
 
         [Route("getSound")]
         //[HttpPost]
-        public async Task<byte[]> GetSound(string msg)
+        public byte[] GetSound(string msg)
         {
             audio = _decoder.MorseBuilder(msg);
+       
+            //await Task.Delay(10000);
 
-            await Task.Delay(1000000);
             return audio;
         }
 
         [Route("morse")]
-        //[HttpPost]
+       // [HttpPost]
         public ActionResult Morse(string msg)
         {
-           _model.message = msg;
-           _model.morse = _decoder.Decode(msg);
+            _model.message = msg;
+            _model.morse = _decoder.Decode(msg);
 
             return View("~/Views/Home/Index.cshtml", _model);
         }
@@ -84,14 +86,14 @@ namespace MorseCodeServer.Controllers
         [Route("log")]
         [HttpGet]
         public ActionResult<string[]> Log(int n)
-        { 
-            var lines =  System.IO.File.ReadLines(ConfigurationManager.AppSettings["logFile"]);
-           return lines.TakeLast(n).ToArray();
+        {
+            var lines = System.IO.File.ReadLines(ConfigurationManager.AppSettings["logFile"]);
+            return lines.TakeLast(n).ToArray();
         }
         [Route("timeout")]
         public string Error()
         {
-            
+
             return "server has timed out";
         }
     }

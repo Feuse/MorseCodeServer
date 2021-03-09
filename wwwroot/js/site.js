@@ -19,6 +19,9 @@ function _base64ToArrayBuffer(base64) {
 var morse;
 var textualMorse;
 var audios
+
+
+
 //ORIGINAL JAVASCRIPT
 window.onload = (event) => {
 
@@ -33,7 +36,7 @@ window.onload = (event) => {
             url: "getSound",
             dataType: "JSON",
             data: { "msg": morse },
-            timeout: 10000, // <==============================================================TIMEOUT 
+            //timeout: 10000, // <==============================================================TIMEOUT 
             success: function (src) {
                 var ret = _base64ToArrayBuffer(src);
                 var array = [].slice.call(ret)
@@ -45,18 +48,7 @@ window.onload = (event) => {
                 const source = document.getElementById('source');
                 source.src = url;
                 audios.load();
-                audios.addEventListener("ended",
-                    $.ajax({
-                        type: "GET",
-                        url: "logMessage",
-                        data: { "morse": morse, "text": textualMorse },
-                        success: function (src) {
-
-                        },
-                        error: function (data, status) {
-
-                        }
-                    }));
+                audios.addEventListener("ended",t)
 
             },
             //two timeouts and display a timeout message.
@@ -82,6 +74,19 @@ window.onload = (event) => {
         });
     }
 };
+function t() {
+    $.ajax({
+        type: "GET",
+        url: "logMessage",
+        data: { "morse": morse, "text": textualMorse },
+        success: function (src) {
+
+        },
+        error: function (data, status) {
+
+        }
+    });
+}
 
 const TIMEOUTMAX = 2;
 var counter = 0;

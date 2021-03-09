@@ -27,7 +27,7 @@ namespace MorseCodeServer
         {
             services.AddHttpContextAccessor();
             services.AddControllersWithViews();
-            services.AddSingleton<IRequestHandler, RequestHandler>();
+          
             services.AddTransient<IMorseDecoder, MorseDecoder>();
 
         }

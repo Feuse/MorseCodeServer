@@ -21,24 +21,24 @@ namespace MorseCodeServer.Services
         public FrequencyChanger(IMemoryCache memoryCache)
         {
             _cache = memoryCache;
-            CacheSounds();
+          
 
 
         }
-        public void CacheSounds()
-        {
-            string[] names = new string[] { "dotSound", "dashSound" };
-            foreach (var name in names)
-            {
-                if (!_cache.TryGetValue(name, out cacheEntry))
-                {
-                    // Key not in cache, so get data.
-                    cacheEntry = System.IO.File.ReadAllBytes(ConfigurationManager.AppSettings[name]);
+        //public void CacheSounds()
+        //{
+        //    string[] names = new string[] { "dotSound", "dashSound" };
+        //    foreach (var name in names)
+        //    {
+        //        if (!_cache.TryGetValue(name, out cacheEntry))
+        //        {
+        //            // Key not in cache, so get data.
+        //            cacheEntry = System.IO.File.ReadAllBytes(ConfigurationManager.AppSettings[name]);
 
-                    _cache.Set(name, cacheEntry);
-                }
-            }
-        }
+        //            _cache.Set(name, cacheEntry);
+        //        }
+        //    }
+        //}
         public void ChangeFrequency(byte[] audio, int sound)
         {
             string[] sounds = new string[] { ConfigurationManager.AppSettings["dotSound"].Replace(".mp3", ""), ConfigurationManager.AppSettings["dashSound"].Replace(".mp3", "") };
